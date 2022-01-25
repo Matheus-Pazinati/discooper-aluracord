@@ -69,7 +69,7 @@ export default function PaginaInicial() {
       <Box
         styleSheet={{
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          backgroundColor: appConfig.theme.colors.primary[100],
+          backgroundColor: appConfig.theme.colors.primary[300],
           backgroundImage: 'url(https://media.discordapp.net/attachments/885984886375215137/935604932281770075/background-sheldon.jpg)',
           backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
         }}
