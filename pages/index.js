@@ -1,34 +1,8 @@
 import { Box, Button, Text, TextField, Image } from '@skynexui/components';
 import appConfig from '../config.json';
+import React from 'react'
+import { useRouter } from 'next/router'
 
-function GlobalStyle() { //Estilo global - reset css
-  return (
-    <style global jsx>{`
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        list-style: none;
-      }
-      body {
-        font-family: 'Open Sans', sans-serif;
-      }
-      /* App fit Height */ 
-      html, body, #__next {
-        min-height: 100vh;
-        display: flex;
-        flex: 1;
-      }
-      #__next {
-        flex: 1;
-      }
-      #__next > * {
-        flex: 1;
-      }
-      /* ./App fit Height */ 
-    `}</style>
-  );
-}
 function Title(props) {
   //Componente titulo principal
   const {children} = props;
@@ -61,11 +35,15 @@ function Title(props) {
 // export default HomePage
 
 export default function PaginaInicial() {
-  const username = 'Matheus-Pazinati';
+  //Rook para atualizar os dados
+  const [username, setUsername] = React.useState('Matheus-Pazinati');
+  //username recebe o nome do usuário
+  //setUserName é a função para alterar o valor de username, em qualquer lugar que username é chamado
+  const validInput = username.length > 2
+  const router = useRouter()
 
   return (
     <>
-      <GlobalStyle />
       <Box
         styleSheet={{
           display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -92,6 +70,10 @@ export default function PaginaInicial() {
           {/* Formulário */}
           <Box
             as="form"
+            onSubmit={function (event) {//Ao submeter o formulário...
+              event.preventDefault()//Previna o comportamento padrão de enviar os dados
+              router.push('/chat')//Adicione a página do chat na pilha de rotas
+            }}
             styleSheet={{
               display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
               width: { xs: '100%', sm: '50%' }, textAlign: 'center', marginBottom: '32px',
@@ -103,6 +85,11 @@ export default function PaginaInicial() {
             </Text>
 
             <TextField
+              value={username} //Valor inicial do input é a variavel username
+              onChange={function (event) {//Quando o input for alterado...
+                const newValue = event.target.value;//Guarda o valor que o usuário está digitando em uma variável
+                setUsername(newValue)//Altera o valor de username para a variavel acima, toda vez que o input muda
+              }}
               fullWidth
               textFieldColors={{
                 neutral: {
@@ -149,15 +136,22 @@ export default function PaginaInicial() {
                 borderRadius: '50%',
                 marginBottom: '16px',
               }}
-              src={`https://github.com/${username}.png`}
+              src={validInput ?`https://github.com/${username}.png`: ""}
+              //Se o input ter mais que 2 caracteres, mostra a foto, se não, não mostra nada.
+              //Como username sempre é atualizado quando o input muda, essa verificação sempre é feita
             />
             <Text
               variant="body4"
+              tag= {validInput ? "a" : "span"}//Se o campo tiver mais que 2 caracteres é um link, se não um span
+              target="_blank"
+              href={`https://github.com/${username}`}
               styleSheet={{
                 color: appConfig.theme.colors.neutrals[200],
                 backgroundColor: appConfig.theme.colors.neutrals[900],
                 padding: '3px 10px',
-                borderRadius: '1000px'
+                borderRadius: '1000px',
+                textDecoration: 'none',
+                cursor: 'pointer'
               }}
             >
               {username}
