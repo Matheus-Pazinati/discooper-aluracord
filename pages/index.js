@@ -5,8 +5,8 @@ import { useRouter } from 'next/router'
 
 function Title(props) {
   //Componente titulo principal
-  const {children} = props;
-  const Tag = props.tag || 'h1';
+  const {children} = props; //Bem vindo ao Discooper
+  const Tag = props.tag || 'h1'; //Caso receba algum valor na prop tag, receba ela, se não, é um h1
   return (
     <>
       <Tag>{children}</Tag>
@@ -39,7 +39,7 @@ export default function PaginaInicial() {
   const [username, setUsername] = React.useState('Matheus-Pazinati');
   //username recebe o nome do usuário
   //setUserName é a função para alterar o valor de username, em qualquer lugar que username é chamado
-  const validInput = username.length > 2
+  const validInput = username.length > 2 //Retorna true se o numero de caracteres do input for maior que 2
   const router = useRouter()
 
   return (
@@ -154,7 +154,8 @@ export default function PaginaInicial() {
                 cursor: 'pointer'
               }}
             >
-              {username}
+              {username} 
+              {/* Recebe um novo username, cada vez que o input muda */}
             </Text>
           </Box>
           {/* Photo Area */}
