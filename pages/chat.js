@@ -24,8 +24,8 @@ export default function ChatPage() {
         <Box
             styleSheet={{
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                backgroundColor: appConfig.theme.colors.primary[500],
-                backgroundImage: `url(https://ak.picdn.net/shutterstock/videos/23112115/thumb/1.jpg)`,
+                backgroundColor: appConfig.theme.colors.primary[100],
+                backgroundImage: `url(https://www.enjpg.com/img/2020/outer-space-background-8.jpg)`,
                 backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
                 color: appConfig.theme.colors.neutrals['000']
             }}
@@ -39,7 +39,7 @@ export default function ChatPage() {
                     borderRadius: '5px',
                     backgroundColor: appConfig.theme.colors.neutrals[800],
                     height: '100%',
-                    maxWidth: '95%',
+                    maxWidth: '87.5%',
                     maxHeight: '95vh',
                     padding: '32px',
                 }}
@@ -51,12 +51,13 @@ export default function ChatPage() {
                         display: 'flex',
                         flex: 1,
                         height: '80%',
-                        backgroundColor: appConfig.theme.colors.neutrals[700],
+                        backgroundColor: appConfig.theme.colors.neutrals[900],
                         flexDirection: 'column',
                         borderRadius: '5px',
                         padding: '16px',
                     }}
                 >
+                    {/* Criação de props, pois o componente MessageList não tem acesso ao escopo da variável messageList */}
                     <MessageList messages={messageList} />
 
                     <Box
@@ -75,7 +76,11 @@ export default function ChatPage() {
                               setMessage(messageText)
                             }}
                             onKeyPress={(event) => {
-                              if (event.key === 'Enter'){
+                              if (event.key === 'Enter'){ //Quando o usuário clicar a tecla Enter
+                                if (message.length == 0){//Se o input não possuir nenhum caractere
+                                  event.preventDefault()//Previna o comportamento padrão de pular linha
+                                  return //Não execute o restante do código
+                                }
                                 event.preventDefault()
                                 handleNewMessage(message)
                               }                             
@@ -129,20 +134,20 @@ function MessageList(props) {
                 marginBottom: '16px',
             }}
         >
-            {props.messages.map((message) => {
+            {props.messages.map((message) => {//Para cada mensagem em mensageList...
               return (
                 <Text
-                tag="li"
-                key={message.id}
-                styleSheet={{
-                    borderRadius: '5px',
-                    padding: '6px',
-                    marginBottom: '12px',
-                    hover: {
-                        backgroundColor: appConfig.theme.colors.neutrals[700],
-                    }
-                }}
-            >
+                  tag="li"
+                  key={message.id}
+                  styleSheet={{
+                      borderRadius: '5px',
+                      padding: '6px',
+                      marginBottom: '12px',
+                      hover: {
+                          backgroundColor: appConfig.theme.colors.neutrals[700],
+                      }
+                  }}
+                >
                 <Box
                     styleSheet={{
                         marginBottom: '8px',
@@ -150,8 +155,8 @@ function MessageList(props) {
                 >
                     <Image
                         styleSheet={{
-                            width: '20px',
-                            height: '20px',
+                            width: '32px',
+                            height: '32px',
                             borderRadius: '50%',
                             display: 'inline-block',
                             marginRight: '8px',
@@ -159,7 +164,7 @@ function MessageList(props) {
                         src={`https://github.com/${message.from}.png`}
                     />
                     <Text tag="strong">
-                        {message.from}
+                      {message.from}
                     </Text>
                     <Text
                         styleSheet={{
@@ -173,7 +178,7 @@ function MessageList(props) {
                     </Text>
                 </Box>
                 {message.messageContent}
-            </Text>
+                </Text>
               )
             })}
         </Box>

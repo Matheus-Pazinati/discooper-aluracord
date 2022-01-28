@@ -15,6 +15,7 @@ function Title(props) {
           color: ${appConfig.theme.colors.neutrals['000']};
           font-size: 24px;
           font-weight: 600;
+          margin-bottom: 8px;
         }
       `}
       </style>
@@ -47,10 +48,11 @@ export default function PaginaInicial() {
       <Box
         styleSheet={{
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          backgroundColor: appConfig.theme.colors.primary[300],
-          backgroundImage: 'url(https://media.discordapp.net/attachments/885984886375215137/935604932281770075/background-sheldon.jpg)',
+          backgroundColor: appConfig.theme.colors.neutrals[300],
+          backgroundImage: 'url(https://wallpaperaccess.com/full/1906729.jpg)',
           backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
         }}
+        //https://media.discordapp.net/attachments/885984886375215137/935604932281770075/background-sheldon.jpg
       >
         <Box
           styleSheet={{
@@ -64,7 +66,7 @@ export default function PaginaInicial() {
             width: '100%', maxWidth: '700px',
             borderRadius: '5px', padding: '32px', margin: '16px',
             boxShadow: '0 2px 10px 0 rgb(0 0 0 / 20%)',
-            backgroundColor: appConfig.theme.colors.neutrals['transparent'],
+            backgroundColor: appConfig.theme.colors.neutrals['800'],
           }}
         >
           {/* Formulário */}
@@ -79,8 +81,8 @@ export default function PaginaInicial() {
               width: { xs: '100%', sm: '50%' }, textAlign: 'center', marginBottom: '32px',
             }}
           >
-            <Title tag="h2">Bem-vindo ao Discooper</Title>
-            <Text variant="body3" styleSheet={{ marginBottom: '32px', color: appConfig.theme.colors.neutrals[200] }}>
+            <Title tag="h1">Bem-vindo ao Discooper</Title>
+            <Text variant="body2" styleSheet={{ marginBottom: '32px', color: appConfig.theme.colors.neutrals[200] }}>
               {appConfig.name}
             </Text>
 
