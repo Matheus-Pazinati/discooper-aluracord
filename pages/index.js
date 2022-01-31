@@ -23,18 +23,6 @@ function Title(props) {
   )
 }
 
-// function HomePage() {
-//   //JSX
-//   return (
-//     <div>
-//       <GlobalStyle />
-//       <Title tag="h1">Discooper</Title>
-//       <h2>Seja bem vindo</h2>
-//     </div>
-//   )
-// }
-// export default HomePage
-
 export default function PaginaInicial() {
   //Rook para atualizar os dados
   const [username, setUsername] = React.useState('Matheus-Pazinati');
@@ -48,7 +36,7 @@ export default function PaginaInicial() {
       <Box
         styleSheet={{
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          backgroundColor: appConfig.theme.colors.neutrals[400],
+          backgroundColor: appConfig.theme.colors.neutrals[100],
           backgroundImage: 'url(../images/background-login.jpg)',
           backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
         }}       
@@ -75,7 +63,7 @@ export default function PaginaInicial() {
             as="form"
             onSubmit={function (event) {//Ao submeter o formulário...
               event.preventDefault()//Previna o comportamento padrão de enviar os dados
-              router.push('/chat')//Adicione a página do chat na pilha de rotas
+              router.push(`/chat?username=${username}`)//Adicione a página do chat na pilha de rotas e passando o nome do usuário
             }}
             styleSheet={{
               display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',

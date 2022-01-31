@@ -2,23 +2,22 @@ import { Box, Text, TextField, Image, Button } from '@skynexui/components';
 import React from 'react';
 import appConfig from '../config.json';
 import { createClient } from '@supabase/supabase-js'
+import { useRouter } from 'next/router'
 
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzQ1NDg1NiwiZXhwIjoxOTU5MDMwODU2fQ.3qbEm0mjkJo9gl7gqfOgq_YmjwQv03RBnFhgA3vh5RI";
-const SUPABASE_URL = 'https://zhjadqkmnfkoqwyyculo.supabase.co';
-const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY); //Função da biblioteca que busca, através da chave e url da minha conta, todos os bancos de dados e outras informações que tenho
+export default function ChatPage({ SUPABASE_ANON_KEY, SUPABASE_URL }) {
 
-function getMensagensDataBase() {//Função para pegar os dados do Banco que está no Supabase
-  return supabaseClient.from('mensagens')//Pegue somente os dados do banco chamado mensagens
-}
-
-
-
-
-export default function ChatPage() {
+  const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY); //Função da biblioteca que busca, através da chave e url da minha conta, todos os bancos de dados e outras informações que tenho
+  
+  function getMensagensDataBase() {//Função para pegar os dados do Banco que está no Supabase
+    return supabaseClient.from('mensagens')//Pegue somente os dados do banco chamado mensagens
+  }
 
   const [message, setMessage] = React.useState('')
   const [messageList, setMessageList] = React.useState([])
   const [loading, setLoading] = React.useState(true) //Inicia variável loading como true
+  const router = useRouter()
+
+  const userLogged = router.query.username; //Pegando o nome do usuário logado através da url
 
   React.useEffect(() => {// Hook do React, que por padrão, executa uma função após cada renderização
     getMensagensDataBase()//Pegue a tabela mensagens do meu supabase
@@ -26,13 +25,13 @@ export default function ChatPage() {
     .order('id', { ascending: false })//Ordene as mensagens do menor id para o maior
     .then(({ data }) => { //Então, pegue o atributo data destes valores, que é um array com os dados da tabela
       setMessageList(data) //Inclua este array na lista de mensagens
-      setLoading(false)
+      setLoading(false) //Quando retornar os dados, defina loading como false
     })
   }, []) //O array vazio como segundo parâmetro define que este useEffect será executado apenas na primeira renderização
 
   function handleNewMessage(newMessage) {//Função chamada a cada vez que o usuário pressiona Enter
     const message = {
-      from: 'Matheus-Pazinati',
+      from: userLogged,
       text: newMessage,
     }
 
@@ -53,7 +52,7 @@ export default function ChatPage() {
         <Box
             styleSheet={{
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                backgroundColor: appConfig.theme.colors.primary[300],
+                backgroundColor: appConfig.theme.colors.neutrals[200],
                 backgroundImage: `url(../images/background-chat.jpg)`,
                 backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
                 color: appConfig.theme.colors.neutrals['000']
@@ -259,4 +258,14 @@ function Loading(props) {//Componente de Loading do chat
   } else {//Quando loading for false, remova o spinner
     return null
   }
+}
+
+export async function getServerSideProps() {
+  const { SUPABASE_ANON_KEY, SUPABASE_URL } = process.env;
+  return {
+    props: {
+      SUPABASE_URL,
+      SUPABASE_ANON_KEY,
+    },
+  };
 }
