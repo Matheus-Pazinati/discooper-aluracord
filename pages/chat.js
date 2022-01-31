@@ -4,13 +4,15 @@ import appConfig from '../config.json';
 import { createClient } from '@supabase/supabase-js'
 import { useRouter } from 'next/router'
 
-export default function ChatPage({ SUPABASE_ANON_KEY, SUPABASE_URL }) {
+const SUPABASE_URL = "https://zhjadqkmnfkoqwyyculo.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzQ1NDg1NiwiZXhwIjoxOTU5MDMwODU2fQ.3qbEm0mjkJo9gl7gqfOgq_YmjwQv03RBnFhgA3vh5RI";
+const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY); //Função da biblioteca que busca, através da chave e url da minha conta, todos os bancos de dados e outras informações que tenho
 
-  const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY); //Função da biblioteca que busca, através da chave e url da minha conta, todos os bancos de dados e outras informações que tenho
-  
-  function getMensagensDataBase() {//Função para pegar os dados do Banco que está no Supabase
-    return supabaseClient.from('mensagens')//Pegue somente os dados do banco chamado mensagens
-  }
+function getMensagensDataBase() {//Função para pegar os dados do Banco que está no Supabase
+  return supabaseClient.from('mensagens')//Pegue somente os dados do banco chamado mensagens
+}
+
+export default function ChatPage() {
 
   const [message, setMessage] = React.useState('')
   const [messageList, setMessageList] = React.useState([])
@@ -221,7 +223,6 @@ function MessageList(props) {
     )
 }
 
-
 function Loading(props) {//Componente de Loading do chat
   const Tag = props.tag;
   if (props.carregando) {//Enquanto a variável loading for true, adicione o spinner no chat
@@ -258,14 +259,4 @@ function Loading(props) {//Componente de Loading do chat
   } else {//Quando loading for false, remova o spinner
     return null
   }
-}
-
-export async function getServerSideProps() {
-  const { SUPABASE_ANON_KEY, SUPABASE_URL } = process.env;
-  return {
-    props: {
-      SUPABASE_URL,
-      SUPABASE_ANON_KEY,
-    },
-  };
 }
