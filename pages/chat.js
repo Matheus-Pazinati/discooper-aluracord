@@ -18,7 +18,7 @@ export default function ChatPage() {
 
   const [message, setMessage] = React.useState('')
   const [messageList, setMessageList] = React.useState([])
-  const [loading, setLoading] = React.useState(true)
+  const [loading, setLoading] = React.useState(true) //Inicia variável loading como true
 
   React.useEffect(() => {// Hook do React, que por padrão, executa uma função após cada renderização
     getMensagensDataBase()//Pegue a tabela mensagens do meu supabase
@@ -53,8 +53,8 @@ export default function ChatPage() {
         <Box
             styleSheet={{
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                backgroundColor: appConfig.theme.colors.primary[100],
-                backgroundImage: `url(https://i.ytimg.com/vi/NtOwzU5Rpp8/maxresdefault.jpg)`,
+                backgroundColor: appConfig.theme.colors.primary[300],
+                backgroundImage: `url(../images/background-chat.jpg)`,
                 backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
                 color: appConfig.theme.colors.neutrals['000']
             }}
@@ -67,7 +67,7 @@ export default function ChatPage() {
                     boxShadow: '0 2px 10px 0 rgb(0 0 0 / 20%)',
                     borderRadius: '8px',
                     backgroundColor: appConfig.theme.colors.neutrals[600],
-                    backgroundImage: 'url(https://i.ytimg.com/vi/NtOwzU5Rpp8/maxresdefault.jpg)',
+                    backgroundImage: 'url(../images/background-stars.jpg)',
                     backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
                     height: '100%',
                     maxWidth: '87.5%',
@@ -85,7 +85,7 @@ export default function ChatPage() {
                         border: '1px solid',
                         borderColor: appConfig.theme.colors.neutrals['000'],
                         backgroundColor: appConfig.theme.colors.neutrals[700],
-                        backgroundImage: 'url(https://i.ytimg.com/vi/NtOwzU5Rpp8/maxresdefault.jpg)',
+                        backgroundImage: 'url(../images/background-stars.jpg)',
                         backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
                         flexDirection: 'column',
                         borderRadius: '5px',
@@ -113,7 +113,7 @@ export default function ChatPage() {
                               setMessage(messageText)
                             }}
                             onKeyPress={(event) => {
-                              if (event.key === 'Enter'){ //Quando o usuário clicar a tecla Enter
+                              if (event.key === 'Enter'){ //Quando o usuário pressionar a tecla Enter
                                 if (message.length == 0){//Se o input não possuir nenhum caractere
                                   event.preventDefault()//Previna o comportamento padrão de pular linha
                                   return //Não execute o restante do código
@@ -223,9 +223,9 @@ function MessageList(props) {
 }
 
 
-function Loading(props) {
+function Loading(props) {//Componente de Loading do chat
   const Tag = props.tag;
-  if (props.carregando) {
+  if (props.carregando) {//Enquanto a variável loading for true, adicione o spinner no chat
     return (
       <>
         <Tag></Tag>
@@ -256,7 +256,7 @@ function Loading(props) {
       </style>
     </>
     )
-  } else {
+  } else {//Quando loading for false, remova o spinner
     return null
   }
 }

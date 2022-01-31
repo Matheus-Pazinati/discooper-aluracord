@@ -49,7 +49,7 @@ export default function PaginaInicial() {
         styleSheet={{
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           backgroundColor: appConfig.theme.colors.neutrals[400],
-          backgroundImage: 'url(https://i.pinimg.com/originals/0a/fe/39/0afe399b3f0a454632c7fea074a3f0cb.jpg)',
+          backgroundImage: 'url(../images/background-login.jpg)',
           backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
         }}       
       >
@@ -66,7 +66,7 @@ export default function PaginaInicial() {
             borderRadius: '48px', padding: '32px', margin: '16px',
             boxShadow: '0 2px 10px 0 rgb(0 0 0 / 20%)',
             backgroundColor: appConfig.theme.colors.neutrals[400],
-            backgroundImage: 'url(https://i.ytimg.com/vi/NtOwzU5Rpp8/maxresdefault.jpg)',
+            backgroundImage: 'url(../images/background-stars.jpg)',
             backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
           }}
         >
