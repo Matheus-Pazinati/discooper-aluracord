@@ -3,6 +3,7 @@ import React from 'react';
 import appConfig from '../config.json';
 import { createClient } from '@supabase/supabase-js'
 import { useRouter } from 'next/router'
+import { ButtonSendSticker } from '../src/components/button-sticker'
 
 const SUPABASE_URL = "https://zhjadqkmnfkoqwyyculo.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzQ1NDg1NiwiZXhwIjoxOTU5MDMwODU2fQ.3qbEm0mjkJo9gl7gqfOgq_YmjwQv03RBnFhgA3vh5RI";
@@ -54,7 +55,7 @@ export default function ChatPage() {
         <Box
             styleSheet={{
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                backgroundColor: appConfig.theme.colors.neutrals[200],
+                backgroundColor: appConfig.theme.colors.neutrals[300],
                 backgroundImage: `url(../images/background-chat.jpg)`,
                 backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
                 color: appConfig.theme.colors.neutrals['000']
@@ -67,7 +68,7 @@ export default function ChatPage() {
                     flex: 1,
                     boxShadow: '0 2px 10px 0 rgb(0 0 0 / 20%)',
                     borderRadius: '8px',
-                    backgroundColor: appConfig.theme.colors.neutrals[600],
+                    backgroundColor: appConfig.theme.colors.neutrals[400],
                     backgroundImage: 'url(../images/background-stars.jpg)',
                     backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
                     height: '100%',
@@ -134,6 +135,10 @@ export default function ChatPage() {
                                 color: appConfig.theme.colors.neutrals[200],
                             }}
                         />
+                        <ButtonSendSticker onStickerClick= {(sticker) => {
+                          handleNewMessage(`:sticker: ${sticker}`)
+                        }} />
+                        
                     </Box>
                 </Box>
             </Box>
@@ -215,7 +220,18 @@ function MessageList(props) {
                         {(new Date().toLocaleDateString())}
                     </Text>
                 </Box>
-                {message.text}
+                {message.text.startsWith(':sticker:')
+                ? (
+                    <Image
+                    styleSheet={{
+                      maxWidth: '200px',
+                    }} 
+                    src={message.text.replace(":sticker:", "")}
+                    />
+                  )
+                : (
+                  message.text
+                  )}
                 </Text>
               )
             })}
