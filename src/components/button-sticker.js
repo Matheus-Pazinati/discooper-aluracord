@@ -3,7 +3,7 @@ import { Box, Button, Text, Image } from '@skynexui/components';
 import appConfig from '../../config.json';
 
 export function ButtonSendSticker(props) {
-  const [isOpen, setOpenState] = React.useState('');
+  const [isOpen, setOpenState] = React.useState(''); //Abrir e fechar o menu de stickers
 
   return (
     <Box
@@ -23,16 +23,16 @@ export function ButtonSendSticker(props) {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: appConfig.theme.colors.neutrals[300],
-          filter: isOpen ? 'grayscale(0)' : 'grayscale(1)',
+          backgroundColor: appConfig.theme.colors.primary[800],
+          filter: isOpen ? 'grayscale(0)' : 'grayscale(0.5)',
           hover: {
-            filter: 'grayscale(1)',
+            filter: 'grayscale(0)',
           }
         }}
         label="👽"
-        onClick={() => setOpenState(!isOpen)}
+        onClick={() => setOpenState(!isOpen)} //Se o menu do sticker estiver aberto, então feche, e vice-versa
       />
-      {isOpen && (
+      {isOpen && ( //Se estiver aberto...
         <Box
           styleSheet={{
             display: 'flex',
@@ -50,7 +50,7 @@ export function ButtonSendSticker(props) {
             padding: '16px',
             boxShadow: 'rgba(4, 4, 5, 0.15) 0px 0px 0px 1px, rgba(0, 0, 0, 0.24) 0px 8px 16px 0px',
           }}
-          onClick={() => setOpenState(false)}
+          onClick={() => setOpenState(false)} //Se eu clicar no box do menu do sticker, então feche ele
         >
           <Text
             styleSheet={{
@@ -71,19 +71,20 @@ export function ButtonSendSticker(props) {
               overflow: 'scroll',
             }}
           >
-            {appConfig.stickers.map((sticker) => (
+            {appConfig.stickers.map((sticker) => ( //Para cada sticker...
               <Text
                 tag="li" 
                 key={sticker}
-                onClick={() => {
-                  if (Boolean(props.onStickerClick)) {
-                    props.onStickerClick(sticker)
+                onClick={() => {//Ao clicar em algum sticker
+                  if (Boolean(props.onStickerClick)) { //Se existir a props de onStickerClick
+                    props.onStickerClick(sticker) //Executa a função, passando o sticker que foi clicado como parâmetro
                   }
                 }}
                 styleSheet={{
                   width: '50%',
                   borderRadius: '5px',
                   padding: '10px',
+                  cursor: 'pointer',
                   focus: {
                     backgroundColor: appConfig.theme.colors.neutrals[600],
                   },

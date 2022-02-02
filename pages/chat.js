@@ -13,6 +13,15 @@ function getMensagensDataBase() {//Função para pegar os dados do Banco que est
   return supabaseClient.from('mensagens')//Pegue somente os dados do banco chamado mensagens
 }
 
+function listenMessagesOnRealTime(addMessage) {//Recebe uma função como parâmetro
+  return supabaseClient
+    .from('mensagens') //No banco de dados "mensagens"...
+    .on('INSERT', (respostaLive) => { //Quando alguma informação for inserida no banco...Retorne essa informação
+      addMessage(respostaLive.new) //Executa a função, passando o novo valor inserido
+    })
+    .subscribe();
+}
+
 export default function ChatPage() {
 
   const [message, setMessage] = React.useState('')
@@ -30,6 +39,16 @@ export default function ChatPage() {
       setMessageList(data) //Inclua este array na lista de mensagens
       setLoading(false) //Quando retornar os dados, defina loading como false
     })
+
+    //newMessage é a respostaLive.new
+    listenMessagesOnRealTime((newMessage) => {//Executa a função para verificar se algo está sendo inserido no banco
+      setMessageList((currentList) => { //Quando algo for inserido, pegue a lista atual que está na messageList
+        return [ //Adicione na lista de mensagens, o novo valor inserido no banco, junto com a lista atual
+          newMessage,
+          ...currentList
+        ]
+      })
+    });
   }, []) //O array vazio como segundo parâmetro define que este useEffect será executado apenas na primeira renderização
 
   function handleNewMessage(newMessage) {//Função chamada a cada vez que o usuário pressiona Enter
@@ -43,10 +62,7 @@ export default function ChatPage() {
       message
     ])
     .then((response) => {//Então, pegue esse array...
-      setMessageList([ //Atualize a lista de mensagens, com a nova mensagem, e as que já estavam na lista.
-        response.data[0],
-        ...messageList
-      ])
+      console.log(response)
     })
     setMessage('') //Limpa o campo do input
   }
@@ -97,8 +113,6 @@ export default function ChatPage() {
                     {/* Criação de props, pois o componente MessageList não tem acesso ao escopo da variável messageList */}
                     <MessageList messages={messageList} />
                     <Loading carregando={loading} tag="div"/>
-                    
-
                     <Box
                         as="form"
                         styleSheet={{
@@ -110,9 +124,9 @@ export default function ChatPage() {
                             placeholder="Insira sua mensagem aqui..."
                             type="textarea"
                             value={message}
-                            onChange={(event) => {
-                              const messageText = event.target.value
-                              setMessage(messageText)
+                            onChange={(event) => {//Sempre que o valor do input mudar...
+                              const messageText = event.target.value //Armazena em uma variável o valor do input
+                              setMessage(messageText) //message recebe o valor do input
                             }}
                             onKeyPress={(event) => {
                               if (event.key === 'Enter'){ //Quando o usuário pressionar a tecla Enter
@@ -121,7 +135,7 @@ export default function ChatPage() {
                                   return //Não execute o restante do código
                                 }
                                 event.preventDefault()
-                                handleNewMessage(message)
+                                handleNewMessage(message) //Adicione a mensagem na lista de mensagens
                               }                             
                             }}
                             styleSheet={{
@@ -135,9 +149,10 @@ export default function ChatPage() {
                                 color: appConfig.theme.colors.neutrals[200],
                             }}
                         />
-                        <ButtonSendSticker onStickerClick= {(sticker) => {
-                          handleNewMessage(`:sticker: ${sticker}`)
-                        }} />
+                        <ButtonSendSticker onStickerClick= {(sticker) => { //Recebe o sticker clicado como parâmetro
+                          handleNewMessage(`:sticker: ${sticker}`)//Adiciona o sticker na lista de mensagens, com o prefixo :sticker:
+                          }}
+                        />
                         
                     </Box>
                 </Box>
@@ -220,17 +235,17 @@ function MessageList(props) {
                         {(new Date().toLocaleDateString())}
                     </Text>
                 </Box>
-                {message.text.startsWith(':sticker:')
-                ? (
+                {message.text.startsWith(':sticker:') //Se a mensagem começar com :sticker:
+                ? ( //Rederize um componente de imagem...
                     <Image
                     styleSheet={{
                       maxWidth: '200px',
                     }} 
-                    src={message.text.replace(":sticker:", "")}
+                    src={message.text.replace(":sticker:", "")} //Adicione como src da image a url do sticker
                     />
                   )
-                : (
-                  message.text
+                : (//Se não tiver o :sticker: no começo da mensagem...
+                  message.text //Mostre a mensagem
                   )}
                 </Text>
               )
@@ -241,38 +256,36 @@ function MessageList(props) {
 
 function Loading(props) {//Componente de Loading do chat
   const Tag = props.tag;
-  if (props.carregando) {//Enquanto a variável loading for true, adicione o spinner no chat
-    return (
+  return (
+    props.carregando && (
       <>
         <Tag></Tag>
         <style jsx>{`
-        div {
-          border-top: 16px solid blue;
-          border-right: 16px solid green;
-          border-bottom: 16px solid blue;
-          border-left: 16px solid green;
-          border-radius: 50%;
-          width: 120px;
-          height: 120px;
-          margin: 64px auto;
-          -webkit-animation: spin 2s linear infinite;
-          animation: spin 2s linear infinite;   
-        }
+          div {
+            background-image: url('../images/spinner-loading.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            margin: 64px auto;
+            -webkit-animation: spin 2s linear infinite;
+            animation: spin 2s linear infinite;   
+          }
 
-        @-webkit-keyframes spin {
-          0% { -webkit-transform: rotate(0deg); }
-          100% { -webkit-transform: rotate(360deg); }
-        }  
+          @-webkit-keyframes spin {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+          }  
 
-        @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-      `}
-      </style>
-    </>
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        `}
+        </style>
+      </>
     )
-  } else {//Quando loading for false, remova o spinner
-    return null
-  }
+  )
 }
