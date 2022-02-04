@@ -18,14 +18,12 @@
 </ul>
 <br>
 <h2>📌 Funcionalidades a serem implementadas</h2>
-<input type="checkbox" disabled="true">Botão para excluir mensagens</input>
-<br>
-<input type="checkbox" disabled="true">Botão para enviar mensagens (alternativa ao uso da tecla Enter)</input>
-<br>
-<input type="checkbox" disabled="true">Exibir imagem de User Not Found na tela de login, caso o usuário não seja encontrado</input>
-<br>
-<input type="checkbox" disabled="true">Permitir login apenas para usuários cadastrados no Github</input>
-<br>
+<ul>
+  <li>Botão para excluir mensagens</li>
+  <li>Botão para enviar mensagens (alternativa ao uso da tecla Enter)</li>
+  <li>Exibir imagem de User Not Found na tela de login, caso o usuário não seja encontrado</li>
+  <li>Permitir login apenas para usuários cadastrados no Github</li>
+</ul>
 <br>
 <h2>🔖 Layout</h2>
 <p>Você pode visualizar o layout do projeto através deste link: <a href="https://www.figma.com/file/tVrOHnvNQJxp8znddhZoft/Imers%C3%A3o-React---Aluracord---Matrix-(Copy)?node-id=0%3A1">Layout do projeto</a>. É necessário possuir uma conta no <a href="https://figma.com">Figma</a> para acessá-lo.</p>
