@@ -3,7 +3,10 @@ import React from 'react';
 import appConfig from '../config.json';
 import { createClient } from '@supabase/supabase-js'
 import { useRouter } from 'next/router'
-import { ButtonSendSticker } from '../src/components/button-sticker'
+import { Header } from '../src/components/Header';
+import { MessageList } from '../src/components/MessageList';
+import { ButtonSendSticker } from '../src/components/ButtonSendSticker'
+import { Loading } from '../src/components/Loading';
 
 const SUPABASE_URL = "https://zhjadqkmnfkoqwyyculo.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzQ1NDg1NiwiZXhwIjoxOTU5MDMwODU2fQ.3qbEm0mjkJo9gl7gqfOgq_YmjwQv03RBnFhgA3vh5RI";
@@ -159,133 +162,4 @@ export default function ChatPage() {
             </Box>
         </Box>
     )
-}
-
-function Header() {
-    return (
-        <>
-            <Box styleSheet={{ width: '100%', marginBottom: '16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }} >
-                <Text variant='heading5'>
-                    Chat
-                </Text>
-                <Button
-                    variant='tertiary'
-                    colorVariant='neutral'
-                    label='Logout'
-                    href="/"
-                />
-            </Box>
-        </>
-    )
-}
-
-function MessageList(props) {
-    return (
-        <Box
-            tag="ul"
-            styleSheet={{
-                overflow: 'auto',
-                display: 'flex',
-                flexDirection: 'column-reverse',
-                flex: 1,
-                color: appConfig.theme.colors.neutrals["000"],
-                marginBottom: '16px',
-            }}
-        >
-            {props.messages.map((message) => {//Para cada mensagem em mensageList...
-              return (
-                <Text
-                  tag="li"
-                  key={message.id}
-                  styleSheet={{
-                      borderRadius: '5px',
-                      padding: '6px',
-                      marginBottom: '12px',
-                      hover: {
-                          backgroundColor: appConfig.theme.colors.neutrals[900],
-                      }
-                  }}
-                >
-                <Box
-                    styleSheet={{
-                        marginBottom: '8px',
-                    }}
-                >
-                    <Image
-                        styleSheet={{
-                            width: '32px',
-                            height: '32px',
-                            borderRadius: '50%',
-                            display: 'inline-block',
-                            marginRight: '8px',
-                        }}
-                        src={`https://github.com/${message.from}.png`}
-                    />
-                    <Text tag="strong">
-                      {message.from}
-                    </Text>
-                    <Text
-                        styleSheet={{
-                            fontSize: '10px',
-                            marginLeft: '8px',
-                            color: appConfig.theme.colors.neutrals[300],
-                        }}
-                        tag="span"
-                    >
-                        {(new Date().toLocaleDateString())}
-                    </Text>
-                </Box>
-                {message.text.startsWith(':sticker:') //Se a mensagem começar com :sticker:
-                ? ( //Rederize um componente de imagem...
-                    <Image
-                    styleSheet={{
-                      maxWidth: '200px',
-                    }} 
-                    src={message.text.replace(":sticker:", "")} //Adicione como src da image a url do sticker
-                    />
-                  )
-                : (//Se não tiver o :sticker: no começo da mensagem...
-                  message.text //Mostre a mensagem
-                  )}
-                </Text>
-              )
-            })}
-        </Box>
-    )
-}
-
-function Loading(props) {//Componente de Loading do chat
-  const Tag = props.tag;
-  return (
-    props.carregando && (
-      <>
-        <Tag></Tag>
-        <style jsx>{`
-          div {
-            background-image: url('../images/spinner-loading.png');
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: center;
-            border-radius: 50%;
-            width: 120px;
-            height: 120px;
-            margin: 64px auto;
-            -webkit-animation: spin 2s linear infinite;
-            animation: spin 2s linear infinite;   
-          }
-
-          @-webkit-keyframes spin {
-            0% { -webkit-transform: rotate(0deg); }
-            100% { -webkit-transform: rotate(360deg); }
-          }  
-
-          @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-          }
-        `}
-        </style>
-      </>
-    )
-  )
 }
