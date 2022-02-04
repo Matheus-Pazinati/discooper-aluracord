@@ -9,7 +9,7 @@ import { ButtonSendSticker } from '../src/components/ButtonSendSticker'
 import { Loading } from '../src/components/Loading';
 
 const SUPABASE_URL = "https://zhjadqkmnfkoqwyyculo.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzQ1NDg1NiwiZXhwIjoxOTU5MDMwODU2fQ.3qbEm0mjkJo9gl7gqfOgq_YmjwQv03RBnFhgA3vh5RI";
+const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY); //Função da biblioteca que busca, através da chave e url da minha conta, todos os bancos de dados e outras informações que tenho
 
 function getMensagensDataBase() {//Função para pegar os dados do Banco que está no Supabase
