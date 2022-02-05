@@ -15,6 +15,7 @@
   <li><a href="https://nextjs.org/">NextJS</a></li>
   <li><a href="https://skynexui.dev/">SkynexUI</a></li>
   <li><a href="https://supabase.com/">Supabase</a></li>
+  <li><a href="https://sweetalert2.github.io/">SweetAlert</a></li>
 </ul>
 <br>
 <h2>📌 Funcionalidades a serem implementadas</h2>
@@ -22,7 +23,7 @@
   <li>Botão para excluir mensagens</li>
   <li>Botão para enviar mensagens (alternativa ao uso da tecla Enter)</li>
   <li>Exibir imagem de User Not Found na tela de login, caso o usuário não seja encontrado</li>
-  <li>Permitir login apenas para usuários cadastrados no Github</li>
+  <li>Permitir login apenas para usuários cadastrados no Github - Ok ✔️</li>
 </ul>
 <br>
 <h2>🔖 Layout</h2>
