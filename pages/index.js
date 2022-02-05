@@ -3,14 +3,35 @@ import appConfig from '../config.json';
 import React from 'react'
 import { useRouter } from 'next/router'
 import { Title } from '../src/components/Title'
+import Swal from 'sweetalert2';
 
 export default function PaginaInicial() {
   //Rook para atualizar os dados
-  const [username, setUsername] = React.useState('Matheus-Pazinati');
+  const [username, setUsername] = React.useState('');
   //username recebe o nome do usuário
   //setUserName é a função para alterar o valor de username, em qualquer lugar que username é chamado
   const validInput = username.length > 2 //Retorna true se o numero de caracteres do input for maior que 2
   const router = useRouter()
+
+  async function getUserGithubStatus(user) {
+    try {
+      const response = await fetch(`https://api.github.com/users/${user}`)
+      const statusResponse = response.status
+      if (statusResponse != 200) {
+        Swal.fire(
+          'Ops, algo deu errado',
+          'Usuário não cadastrado no Github',
+          'error'
+        )
+      } else {
+        //Adicione a página do chat na pilha de rotas e passando o nome do usuário
+        router.push(`/chat?username=${username}`)
+      }
+    } catch(error) {
+      console.log(error)
+      return
+    }
+  }
 
   return (
     <>
@@ -44,7 +65,7 @@ export default function PaginaInicial() {
             as="form"
             onSubmit={function (event) {//Ao submeter o formulário...
               event.preventDefault()//Previna o comportamento padrão de enviar os dados
-              router.push(`/chat?username=${username}`)//Adicione a página do chat na pilha de rotas e passando o nome do usuário
+              getUserGithubStatus(username)
             }}
             styleSheet={{
               display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
@@ -107,7 +128,7 @@ export default function PaginaInicial() {
                 borderRadius: '50%',
                 marginBottom: '16px',
               }}
-              src={validInput ?`https://github.com/${username}.png`: ""}
+              src={validInput ? `https://github.com/${username}.png` : ""}
               //Se o input ter mais que 2 caracteres, mostra a foto, se não, não mostra nada.
               //Como username sempre é atualizado quando o input muda, essa verificação sempre é feita
             />
