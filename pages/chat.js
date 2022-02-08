@@ -150,6 +150,9 @@ export default function ChatPage() {
                                 backgroundColor: appConfig.theme.colors.neutrals[800],
                                 marginRight: '12px',
                                 color: appConfig.theme.colors.neutrals[200],
+                                focus: {
+                                  border: `1px solid ${appConfig.theme.colors.primary['500']}`
+                                }                                
                             }}
                         />
                         <ButtonSendSticker onStickerClick= {(sticker) => { //Recebe o sticker clicado como parâmetro
