@@ -78,6 +78,7 @@ export default function PaginaInicial() {
             </Text>
 
             <TextField
+              placeholder='Nome de usuário do Github'
               value={username} //Valor inicial do input é a variavel username
               onChange={function (event) {//Quando o input for alterado...
                 const newValue = event.target.value;//Guarda o valor que o usuário está digitando em uma variável
