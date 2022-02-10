@@ -5,6 +5,7 @@ import { createClient } from '@supabase/supabase-js'
 import { useRouter } from 'next/router'
 import { Header } from '../src/components/Header';
 import { MessageList } from '../src/components/MessageList';
+import { ButtonSendMessage } from '../src/components/ButtonSendMessage';
 import { ButtonSendSticker } from '../src/components/ButtonSendSticker'
 import { Loading } from '../src/components/Loading';
 
@@ -110,7 +111,7 @@ export default function ChatPage() {
                         backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
                         flexDirection: 'column',
                         borderRadius: '5px',
-                        padding: '16px',
+                        padding: '14px',
                     }}
                 >
                     {/* Criação de props, pois o componente MessageList não tem acesso ao escopo da variável messageList */}
@@ -121,6 +122,7 @@ export default function ChatPage() {
                         styleSheet={{
                             display: 'flex',
                             alignItems: 'center',
+                            gap: '8px',
                         }}
                     >
                         <TextField
@@ -143,23 +145,29 @@ export default function ChatPage() {
                             }}
                             styleSheet={{
                                 width: '100%',
+                                minWidth: '100px',
                                 border: '0',
                                 resize: 'none',
                                 borderRadius: '5px',
                                 padding: '6px 8px',
                                 backgroundColor: appConfig.theme.colors.neutrals[800],
-                                marginRight: '12px',
                                 color: appConfig.theme.colors.neutrals[200],
                                 focus: {
                                   border: `1px solid ${appConfig.theme.colors.primary['500']}`
                                 }                                
                             }}
                         />
+                        <ButtonSendMessage onSendMessage= {() => {
+                          if (message.length == 0){//Se o input não possuir nenhum caractere
+                            return //Não execute o restante do código
+                          }
+                          handleNewMessage(message)
+                          }}
+                        />
                         <ButtonSendSticker onStickerClick= {(sticker) => { //Recebe o sticker clicado como parâmetro
                           handleNewMessage(`:sticker: ${sticker}`)//Adiciona o sticker na lista de mensagens, com o prefixo :sticker:
                           }}
-                        />
-                        
+                        />                     
                     </Box>
                 </Box>
             </Box>

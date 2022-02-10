@@ -17,7 +17,7 @@ export function ButtonSendSticker(props) {
           padding: '0 3px 0 0',
           minWidth: '50px',
           minHeight: '50px',
-          fontSize: '20px',
+          fontSize: '16px',
           marginBottom: '8px',
           lineHeight: '0',
           display: 'flex',
