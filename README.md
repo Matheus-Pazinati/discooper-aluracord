@@ -20,10 +20,10 @@
 <br>
 <h2>📌 Funcionalidades a serem implementadas</h2>
 <ul>
-  <li>Botão para excluir mensagens</li>
-  <li>Botão para enviar mensagens (alternativa ao uso da tecla Enter)</li>
-  <li>Exibir imagem de User Not Found na tela de login, caso o usuário não seja encontrado</li>
   <li>Permitir login apenas para usuários cadastrados no Github - Ok ✔️</li>
+  <li>Botão para enviar mensagens (alternativa ao uso da tecla Enter) - Ok ✔️</li>
+  <li>Botão para excluir mensagens</li>
+  <li>Exibir imagem de User Not Found na tela de login, caso o usuário não seja encontrado</li>
 </ul>
 <br>
 <h2>🔖 Layout</h2>
