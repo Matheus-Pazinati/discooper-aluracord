@@ -39,7 +39,7 @@ export default function PaginaInicial() {
         styleSheet={{
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           backgroundColor: appConfig.theme.colors.neutrals[300],
-          backgroundImage: 'url(../images/background-login.jpg)',
+          backgroundImage: 'url(../images/background-main.jpg)',
           backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
         }}       
       >
