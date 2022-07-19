@@ -24,6 +24,7 @@
   <li>Botão para enviar mensagens (alternativa ao uso da tecla Enter) - Ok ✔️</li>
   <li>Botão para excluir mensagens</li>
   <li>Exibir imagem de User Not Found na tela de login, caso o usuário não seja encontrado</li>
+  <li>Reescrever os arquivos utilizando Typescript onde for necessário</li>
 </ul>
 <br>
 <h2>🔖 Layout</h2>
