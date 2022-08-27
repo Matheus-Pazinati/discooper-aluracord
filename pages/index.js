@@ -1,6 +1,6 @@
 import { Box, Button, Text, TextField, Image } from '@skynexui/components';
 import appConfig from '../config.json';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Title } from '../src/components/Title'
 import Swal from 'sweetalert2';
@@ -129,7 +129,11 @@ export default function PaginaInicial() {
                 borderRadius: '50%',
                 marginBottom: '16px',
               }}
-              src={validInput ? `https://github.com/${username}.png` : ""}
+              src={validInput ? `https://github.com/${username}.png` : 'https://www.getillustrations.com/packs/circle-flat-illustrations/scenes/_1x/accounts%20_%20account,%20user,%20profile,%20person,%20people,%20not%20found,%20search,%20find,%20lost,%20blocked_md.png'}
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = 'https://www.getillustrations.com/packs/circle-flat-illustrations/scenes/_1x/accounts%20_%20account,%20user,%20profile,%20person,%20people,%20not%20found,%20search,%20find,%20lost,%20blocked_md.png'
+              }}
               //Se o input ter mais que 2 caracteres, mostra a foto, se não, não mostra nada.
               //Como username sempre é atualizado quando o input muda, essa verificação sempre é feita
             />
