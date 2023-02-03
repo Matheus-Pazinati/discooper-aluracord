@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Button, Text, Image } from '@skynexui/components';
+import { Button } from '@skynexui/components';
 import appConfig from '../../config.json';
 
 export function ButtonSendMessage(props) {

@@ -1,8 +1,11 @@
-import { Box, Text, TextField, Image, Button } from '@skynexui/components';
+import { Box, Text, Image, Button } from '@skynexui/components';
 import appConfig from '../../config.json'
 
 export function MessageList(props) {
-  console.log(props.user)
+
+  function handleDeleteMessage(id) {
+    props.onDelete(id)
+  }
 
   return (
     <Box
@@ -70,8 +73,10 @@ export function MessageList(props) {
                   position: 'absolute',
                   right: '6px',
                   top: '25%'
-                  
                 }}
+                  onClick={() => {
+                    handleDeleteMessage(message.id)
+                  }}
                   label={"Excluir"}
                 >
                 </Button>

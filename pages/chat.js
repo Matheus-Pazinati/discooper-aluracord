@@ -1,4 +1,4 @@
-import { Box, Text, TextField, Image, Button } from '@skynexui/components';
+import { Box, TextField} from '@skynexui/components';
 import React from 'react';
 import appConfig from '../config.json';
 import { createClient } from '@supabase/supabase-js'
@@ -71,6 +71,21 @@ export default function ChatPage() {
     setMessage('') //Limpa o campo do input
   }
 
+  function deleteMessage(messageId) {
+    const filteredMessagesWithoutDeletedOne = messageList.filter((message) => {
+      return message.id !== messageId
+    })
+    getMensagensDataBase()
+    .delete()
+    .eq('id', messageId)
+    .then((data) => {
+      console.log('Excluiu')
+    })
+    console.clear()
+
+    setMessageList(filteredMessagesWithoutDeletedOne)
+  }
+
     return (
         <Box
             styleSheet={{
@@ -115,7 +130,7 @@ export default function ChatPage() {
                     }}
                 >
                     {/* Criação de props, pois o componente MessageList não tem acesso ao escopo da variável messageList */}
-                    <MessageList messages={messageList} user={userLogged} />
+                    <MessageList messages={messageList} user={userLogged} onDelete={deleteMessage} />
                     <Loading carregando={loading} tag="div"/>
                     <Box
                         as="form"
