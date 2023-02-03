@@ -23,8 +23,8 @@
   <li>Permitir login apenas para usuários cadastrados no Github - Ok ✔️</li>
   <li>Botão para enviar mensagens (alternativa ao uso da tecla Enter) - Ok ✔️</li>
   <li>Exibir imagem de User Not Found na tela de login, caso o usuário não seja encontrado - Ok ✔️</li>
-  <li>Botão para excluir mensagens</li>
-  <li>Reescrever os arquivos utilizando Typescript onde for necessário</li>
+  <li>Botão para permitir que o usuário delete suas mensagens - Ok ✔️</li>
+  <li>Migrar o projeto para Typescript</li>
 </ul>
 <br>
 <h2>🔖 Layout</h2>
