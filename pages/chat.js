@@ -115,7 +115,7 @@ export default function ChatPage() {
                     }}
                 >
                     {/* Criação de props, pois o componente MessageList não tem acesso ao escopo da variável messageList */}
-                    <MessageList messages={messageList} />
+                    <MessageList messages={messageList} user={userLogged} />
                     <Loading carregando={loading} tag="div"/>
                     <Box
                         as="form"
