@@ -1,5 +1,5 @@
 import { Box, TextField} from '@skynexui/components';
-import React from 'react';
+import React, { useEffect } from 'react';
 import appConfig from '../config.json';
 import { createClient } from '@supabase/supabase-js'
 import { useRouter } from 'next/router'
@@ -22,6 +22,15 @@ function listenMessagesOnRealTime(addMessage) {//Recebe uma função como parâm
     .from('mensagens') //No banco de dados "mensagens"...
     .on('INSERT', (respostaLive) => { //Quando alguma informação for inserida no banco...Retorne essa informação
       addMessage(respostaLive.new) //Executa a função, passando o novo valor inserido
+    })
+    .subscribe();
+}
+
+function deleteMessagesOnRealTime(removeMessage) {
+  return supabaseClient
+    .from('mensagens')
+    .on('DELETE', (response) => {
+      removeMessage(response.old)
     })
     .subscribe();
 }
@@ -53,6 +62,14 @@ export default function ChatPage() {
         ]
       })
     });
+
+    deleteMessagesOnRealTime((oldMessage) => {
+      const filteredMessagesWithoutDeletedOne = messageList.filter((message) => {
+        return message.id !== oldMessage.id
+      })
+      setMessageList(filteredMessagesWithoutDeletedOne)
+    });
+
   }, []) //O array vazio como segundo parâmetro define que este useEffect será executado apenas na primeira renderização
 
   function handleNewMessage(newMessage) {//Função chamada a cada vez que o usuário pressiona Enter
@@ -72,18 +89,13 @@ export default function ChatPage() {
   }
 
   function deleteMessage(messageId) {
-    const filteredMessagesWithoutDeletedOne = messageList.filter((message) => {
-      return message.id !== messageId
-    })
     getMensagensDataBase()
     .delete()
     .eq('id', messageId)
     .then((data) => {
-      console.log('Excluiu')
+      console.log(data)
     })
     console.clear()
-
-    setMessageList(filteredMessagesWithoutDeletedOne)
   }
 
     return (
